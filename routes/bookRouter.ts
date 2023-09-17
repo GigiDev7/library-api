@@ -1,6 +1,6 @@
 import express from "express";
 import booksController from "../controllers/booksController";
-import { createBookValidator } from "../middlewares/validators/bookValidators";
+import { createBookValidator } from "../validators/bookValidators";
 import validationHandler from "../middlewares/validationHandler";
 
 const router = express.Router();

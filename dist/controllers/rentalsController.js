@@ -12,21 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const db_1 = require("./db");
-const bookRouter_1 = __importDefault(require("./routes/bookRouter"));
-const userRouter_1 = __importDefault(require("./routes/userRouter"));
-const rentalRouter_1 = __importDefault(require("./routes/rentalRouter"));
-const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
-dotenv_1.default.config();
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use("/api/book", bookRouter_1.default);
-app.use("/api/user", userRouter_1.default);
-app.use("/api/rent", rentalRouter_1.default);
-app.use(errorHandler_1.default);
-app.listen(8000, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, db_1.connect)();
-    console.log("app listening");
-}));
+const rentalsService_1 = __importDefault(require("../services/rentalsService"));
+const createRent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const newRent = yield rentalsService_1.default.createRent({
+            BookId: req.body.BookId,
+            rentDate: req.body.rentDate,
+            returnDate: req.body.returnDate,
+            UserId: req.user.id,
+        });
+        res.status(201).json(newRent);
+    }
+    catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            return res.status(400).json({ message: "You already rented this book" });
+        }
+        next(error);
+    }
+});
+exports.default = {
+    createRent,
+};

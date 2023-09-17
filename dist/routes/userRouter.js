@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usersController_1 = __importDefault(require("../controllers/usersController"));
-const userValidators_1 = require("../middlewares/validators/userValidators");
+const userValidators_1 = require("../validators/userValidators");
 const validationHandler_1 = __importDefault(require("../middlewares/validationHandler"));
 const protectRoute_1 = __importDefault(require("../middlewares/protectRoute"));
 const protectAdmin_1 = __importDefault(require("../middlewares/protectAdmin"));

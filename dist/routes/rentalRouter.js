@@ -4,16 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const booksController_1 = __importDefault(require("../controllers/booksController"));
-const bookValidators_1 = require("../validators/bookValidators");
+const rentalsController_1 = __importDefault(require("../controllers/rentalsController"));
+const protectRoute_1 = __importDefault(require("../middlewares/protectRoute"));
+const rentalValidators_1 = require("../validators/rentalValidators");
 const validationHandler_1 = __importDefault(require("../middlewares/validationHandler"));
 const router = express_1.default.Router();
+router.use(protectRoute_1.default);
 router
     .route("/")
-    .post(bookValidators_1.createBookValidator, validationHandler_1.default, booksController_1.default.createBook);
-router
-    .route("/:bookId")
-    .get(booksController_1.default.getSingleBook)
-    .delete(booksController_1.default.deleteBook)
-    .put(booksController_1.default.updateBook);
+    .post(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.createRent);
 exports.default = router;

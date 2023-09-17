@@ -1,9 +1,6 @@
 import express from "express";
 import usersController from "../controllers/usersController";
-import {
-  signinValidator,
-  signupValidator,
-} from "../middlewares/validators/userValidators";
+import { signinValidator, signupValidator } from "../validators/userValidators";
 import validationHandler from "../middlewares/validationHandler";
 import protectRoute from "../middlewares/protectRoute";
 import protectAdmin from "../middlewares/protectAdmin";
