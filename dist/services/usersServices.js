@@ -15,14 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = __importDefault(require("../models/user"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const customError_1 = __importDefault(require("../utils/customError"));
+const errorTypes_1 = __importDefault(require("../utils/errorTypes"));
 const siginin = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_1.default.findOne({ where: { email }, raw: true });
     if (!user) {
-        return;
+        throw new customError_1.default(errorTypes_1.default.InvalidCredentialsError, "Invalid credentials");
     }
     const isPasswordCorrect = yield bcrypt_1.default.compare(password, user.password);
     if (!isPasswordCorrect) {
-        return;
+        throw new customError_1.default(errorTypes_1.default.InvalidCredentialsError, "Invalid credentials");
     }
     const accessToken = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET);
     return {

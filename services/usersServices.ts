@@ -1,6 +1,8 @@
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import CustomError from "../utils/customError";
+import Errors from "../utils/errorTypes";
 
 type UserData = {
   firstname: string;
@@ -12,12 +14,18 @@ type UserData = {
 const siginin = async (email: string, password: string) => {
   const user = await User.findOne({ where: { email }, raw: true });
   if (!user) {
-    return;
+    throw new CustomError(
+      Errors.InvalidCredentialsError,
+      "Invalid credentials"
+    );
   }
 
   const isPasswordCorrect = await bcrypt.compare(password, user.password);
   if (!isPasswordCorrect) {
-    return;
+    throw new CustomError(
+      Errors.InvalidCredentialsError,
+      "Invalid credentials"
+    );
   }
 
   const accessToken = jwt.sign(
