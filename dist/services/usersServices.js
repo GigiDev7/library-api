@@ -45,7 +45,11 @@ const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
         password: hashedPassword,
     });
 });
+const deleteUser = (userId) => {
+    return user_1.default.destroy({ where: { id: userId } });
+};
 exports.default = {
     siginin,
     signup,
+    deleteUser,
 };

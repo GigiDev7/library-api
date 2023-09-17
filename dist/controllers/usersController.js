@@ -34,7 +34,17 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         next(error);
     }
 });
+const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield usersServices_1.default.deleteUser(req.params.userId);
+        res.status(204).json();
+    }
+    catch (error) {
+        next(error);
+    }
+});
 exports.default = {
     signin,
     signup,
+    deleteUser,
 };

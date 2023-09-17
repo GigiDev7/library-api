@@ -5,6 +5,8 @@ import {
   signupValidator,
 } from "../middlewares/validators/userValidators";
 import validationHandler from "../middlewares/validationHandler";
+import protectRoute from "../middlewares/protectRoute";
+import protectAdmin from "../middlewares/protectAdmin";
 
 const router = express.Router();
 
@@ -14,5 +16,9 @@ router
 router
   .route("/signup")
   .post(signupValidator, validationHandler, usersController.signup);
+
+router
+  .route("/:userId")
+  .delete(protectRoute, protectAdmin, usersController.deleteUser);
 
 export default router;

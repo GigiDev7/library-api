@@ -54,7 +54,12 @@ const signup = async (userData: UserData) => {
   });
 };
 
+const deleteUser = (userId: string) => {
+  return User.destroy({ where: { id: userId } });
+};
+
 export default {
   siginin,
   signup,
+  deleteUser,
 };
