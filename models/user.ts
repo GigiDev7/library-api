@@ -16,7 +16,7 @@ interface UserModel
   firstname: string;
   lastname: string;
   email: string;
-  password: number;
+  password: string;
 }
 
 const User = sequelize.define<UserModel>(

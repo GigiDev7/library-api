@@ -6,8 +6,11 @@ const createBook = async (req: Request, res: Response, next: NextFunction) => {
     const book = await booksServices.createBook(req.body);
     console.log(book);
     res.status(201).json(book);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(409).json({ message: "Book already exists" });
+    }
+    next(error);
   }
 };
 
@@ -20,7 +23,7 @@ const getSingleBook = async (
     const book = await booksServices.getSingleBook(req.params.bookId);
     res.status(200).json(book);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
@@ -30,6 +33,7 @@ const deleteBook = async (req: Request, res: Response, next: NextFunction) => {
     res.status(204).json();
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
@@ -38,7 +42,7 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
     const book = await booksServices.updateBook(req.body, req.params.bookId);
     res.status(200).json(book);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 

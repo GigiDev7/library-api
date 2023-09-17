@@ -12,19 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const db_1 = require("./db");
-const bookRouter_1 = __importDefault(require("./routes/bookRouter"));
-const userRouter_1 = __importDefault(require("./routes/userRouter"));
-const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
-dotenv_1.default.config();
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
-app.use("/api/book", bookRouter_1.default);
-app.use("/api/user", userRouter_1.default);
-app.use(errorHandler_1.default);
-app.listen(8000, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, db_1.connect)();
-    console.log("app listening");
-}));
+const usersServices_1 = __importDefault(require("../services/usersServices"));
+const signin = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield usersServices_1.default.siginin(req.body.email, req.body.password);
+        res.status(200).json(user);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield usersServices_1.default.signup(req.body);
+        res.status(201).json({ message: "Successfully registered" });
+    }
+    catch (error) {
+        if (error.name === "SequelizeUniqueConstraintError") {
+            return res.status(409).json({ message: "User already exists" });
+        }
+        next(error);
+    }
+});
+exports.default = {
+    signin,
+    signup,
+};

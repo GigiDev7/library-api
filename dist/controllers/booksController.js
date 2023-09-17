@@ -20,7 +20,10 @@ const createBook = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         res.status(201).json(book);
     }
     catch (error) {
-        console.log(error);
+        if (error.name === "SequelizeUniqueConstraintError") {
+            return res.status(409).json({ message: "Book already exists" });
+        }
+        next(error);
     }
 });
 const getSingleBook = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,7 +32,7 @@ const getSingleBook = (req, res, next) => __awaiter(void 0, void 0, void 0, func
         res.status(200).json(book);
     }
     catch (error) {
-        console.log(error);
+        next(error);
     }
 });
 const deleteBook = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -39,6 +42,7 @@ const deleteBook = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         console.log(error);
+        next(error);
     }
 });
 const updateBook = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,7 +51,7 @@ const updateBook = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         res.status(200).json(book);
     }
     catch (error) {
-        console.log(error);
+        next(error);
     }
 });
 exports.default = {
