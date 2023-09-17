@@ -32,6 +32,7 @@ function protectRoute(req, res, next) {
                 email: user.email,
                 firstname: user.firstname,
                 lastname: user.lastname,
+                role: user.role,
             };
             next();
         }

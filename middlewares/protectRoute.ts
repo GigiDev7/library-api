@@ -25,6 +25,7 @@ export default async function protectRoute(
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
+      role: user.role,
     };
     next();
   } catch (err: any) {

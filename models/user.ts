@@ -7,6 +7,11 @@ import {
 } from "sequelize";
 import { sequelize } from "../db";
 
+enum UserRole {
+  user = "user",
+  admin = "admin",
+}
+
 interface UserModel
   extends Model<
     InferAttributes<UserModel>,
@@ -17,6 +22,7 @@ interface UserModel
   lastname: string;
   email: string;
   password: string;
+  role: CreationOptional<UserRole>;
 }
 
 const User = sequelize.define<UserModel>(
@@ -46,6 +52,11 @@ const User = sequelize.define<UserModel>(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM,
+      values: ["admin", "user"],
+      defaultValue: "user",
     },
   },
   {
