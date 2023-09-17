@@ -1,9 +1,32 @@
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import { sequelize } from "../db";
 
-const User = sequelize.define(
+interface UserModel
+  extends Model<
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
+  > {
+  id: CreationOptional<number>;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: number;
+}
+
+const User = sequelize.define<UserModel>(
   "User",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     firstname: {
       type: DataTypes.STRING(40),
       allowNull: false,

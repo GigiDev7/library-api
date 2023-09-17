@@ -8,11 +8,11 @@ const db_1 = require("../db");
 const user_1 = __importDefault(require("./user"));
 const book_1 = __importDefault(require("./book"));
 const Rental = db_1.sequelize.define("Rentals", {
-    rent_date: {
+    rentDate: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
     },
-    return_date: {
+    returnDate: {
         type: sequelize_1.DataTypes.DATE,
         allowNull: false,
     },

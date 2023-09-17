@@ -5,8 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const booksController_1 = __importDefault(require("../controllers/booksController"));
+const bookValidators_1 = require("../middlewares/validators/bookValidators");
+const validationHandler_1 = __importDefault(require("../middlewares/validationHandler"));
 const router = express_1.default.Router();
-router.route("/").post(booksController_1.default.createBook);
+router
+    .route("/")
+    .post(bookValidators_1.createBookValidator, validationHandler_1.default, booksController_1.default.createBook);
 router
     .route("/:bookId")
     .get(booksController_1.default.getSingleBook)

@@ -4,6 +4,7 @@ import booksServices from "../services/booksServices";
 const createBook = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const book = await booksServices.createBook(req.body);
+    console.log(book);
     res.status(201).json(book);
   } catch (error) {
     console.log(error);

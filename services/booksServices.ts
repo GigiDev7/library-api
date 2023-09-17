@@ -12,7 +12,7 @@ const createBook = (bookData: BookData) => {
 };
 
 const getSingleBook = (bookId: string) => {
-  return Book.findByPk(bookId);
+  return Book.findByPk(bookId, { raw: true });
 };
 
 const deleteBook = (bookId: string) => {

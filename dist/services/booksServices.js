@@ -17,7 +17,7 @@ const createBook = (bookData) => {
     return book_1.default.create(bookData);
 };
 const getSingleBook = (bookId) => {
-    return book_1.default.findByPk(bookId);
+    return book_1.default.findByPk(bookId, { raw: true });
 };
 const deleteBook = (bookId) => {
     return book_1.default.destroy({ where: { id: bookId } });

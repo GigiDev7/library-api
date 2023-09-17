@@ -1,9 +1,32 @@
-import { DataTypes } from "sequelize";
+import {
+  DataTypes,
+  Model,
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from "sequelize";
 import { sequelize } from "../db";
 
-const Book = sequelize.define(
+interface BookModel
+  extends Model<
+    InferAttributes<BookModel>,
+    InferCreationAttributes<BookModel>
+  > {
+  id: CreationOptional<number>;
+  name: string;
+  genre: string;
+  author: string;
+  quantity: number;
+}
+
+const Book = sequelize.define<BookModel>(
   "Book",
   {
+    id: {
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,

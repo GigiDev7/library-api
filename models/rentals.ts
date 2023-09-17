@@ -4,11 +4,11 @@ import User from "./user";
 import Book from "./book";
 
 const Rental = sequelize.define("Rentals", {
-  rent_date: {
+  rentDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  return_date: {
+  returnDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
