@@ -7,7 +7,9 @@ const router = express.Router();
 
 router
   .route("/")
+  .get(booksController.getBooks)
   .post(createBookValidator, validationHandler, booksController.createBook);
+
 router
   .route("/:bookId")
   .get(booksController.getSingleBook)

@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const sequelize_1 = require("sequelize");
 const book_1 = __importDefault(require("../models/book"));
 const customError_1 = __importDefault(require("../utils/customError"));
 const errorTypes_1 = __importDefault(require("../utils/errorTypes"));
@@ -34,9 +35,41 @@ const updateBook = (bookData, bookId) => __awaiter(void 0, void 0, void 0, funct
     }
     return result[1][0];
 });
+const getBooks = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const filters = {};
+    const page = query.page || 1;
+    const limit = query.limit || 10;
+    const offset = (page - 1) * limit;
+    //Filter by author
+    if (query.author) {
+        filters.author = query.author;
+    }
+    //Filter by genre
+    if (query.genre) {
+        filters.genre = query.genre;
+    }
+    //Filter by quantity
+    if (query.minQuantity) {
+        filters.quantity = { [sequelize_1.Op.gte]: query.minQuantity };
+    }
+    if (query.maxQuantity) {
+        if (query.minQuantity) {
+            filters.quantity = {
+                [sequelize_1.Op.between]: [query.minQuantity, query.maxQuantity],
+            };
+        }
+        else {
+            filters.quantity = { [sequelize_1.Op.lte]: query.maxQuantity };
+        }
+    }
+    const total = yield book_1.default.count({ where: filters });
+    const books = yield book_1.default.findAll({ where: filters, limit, offset });
+    return { totalCount: total, books };
+});
 exports.default = {
     createBook,
     getSingleBook,
     deleteBook,
     updateBook,
+    getBooks,
 };

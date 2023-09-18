@@ -10,6 +10,7 @@ const validationHandler_1 = __importDefault(require("../middlewares/validationHa
 const router = express_1.default.Router();
 router
     .route("/")
+    .get(booksController_1.default.getBooks)
     .post(bookValidators_1.createBookValidator, validationHandler_1.default, booksController_1.default.createBook);
 router
     .route("/:bookId")

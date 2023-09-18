@@ -54,9 +54,19 @@ const updateBook = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
+const getBooks = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield booksServices_1.default.getBooks(req.query);
+        res.status(200).json(result);
+    }
+    catch (error) {
+        next(error);
+    }
+});
 exports.default = {
     createBook,
     getSingleBook,
     deleteBook,
     updateBook,
+    getBooks,
 };

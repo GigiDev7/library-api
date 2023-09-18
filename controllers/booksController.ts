@@ -46,9 +46,19 @@ const updateBook = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getBooks = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await booksServices.getBooks(req.query);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export default {
   createBook,
   getSingleBook,
   deleteBook,
   updateBook,
+  getBooks,
 };

@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import Book from "../models/book";
 import CustomError from "../utils/customError";
 import Errors from "../utils/errorTypes";
@@ -32,9 +33,48 @@ const updateBook = async (bookData: BookData, bookId: string) => {
   return result[1][0];
 };
 
+const getBooks = async (query: any) => {
+  const filters: any = {};
+
+  const page = query.page || 1;
+  const limit = query.limit || 10;
+
+  const offset = (page - 1) * limit;
+
+  //Filter by author
+  if (query.author) {
+    filters.author = query.author;
+  }
+
+  //Filter by genre
+  if (query.genre) {
+    filters.genre = query.genre;
+  }
+
+  //Filter by quantity
+  if (query.minQuantity) {
+    filters.quantity = { [Op.gte]: query.minQuantity };
+  }
+  if (query.maxQuantity) {
+    if (query.minQuantity) {
+      filters.quantity = {
+        [Op.between]: [query.minQuantity, query.maxQuantity],
+      };
+    } else {
+      filters.quantity = { [Op.lte]: query.maxQuantity };
+    }
+  }
+
+  const total = await Book.count({ where: filters });
+  const books = await Book.findAll({ where: filters, limit, offset });
+
+  return { totalCount: total, books };
+};
+
 export default {
   createBook,
   getSingleBook,
   deleteBook,
   updateBook,
+  getBooks,
 };
