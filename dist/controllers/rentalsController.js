@@ -57,9 +57,19 @@ const deleteRent = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
+const getRents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const results = yield rentalsService_1.default.getRents(req.query);
+        res.status(200).json(results);
+    }
+    catch (error) {
+        next(error);
+    }
+});
 exports.default = {
     createRent,
     getSingleRent,
     updateRent,
     deleteRent,
+    getRents,
 };

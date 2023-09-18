@@ -10,7 +10,8 @@ router.use(protectRoute);
 
 router
   .route("/")
-  .post(rentalValidator, validationHandler, rentalsController.createRent);
+  .post(rentalValidator, validationHandler, rentalsController.createRent)
+  .get(rentalsController.getRents);
 
 router
   .route("/:bookId")

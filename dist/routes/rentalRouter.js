@@ -12,7 +12,8 @@ const router = express_1.default.Router();
 router.use(protectRoute_1.default);
 router
     .route("/")
-    .post(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.createRent);
+    .post(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.createRent)
+    .get(rentalsController_1.default.getRents);
 router
     .route("/:bookId")
     .get(rentalsController_1.default.getSingleRent)
