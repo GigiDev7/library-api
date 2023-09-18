@@ -13,6 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const book_1 = __importDefault(require("../models/book"));
+const customError_1 = __importDefault(require("../utils/customError"));
+const errorTypes_1 = __importDefault(require("../utils/errorTypes"));
 const createBook = (bookData) => {
     return book_1.default.create(bookData);
 };
@@ -27,6 +29,9 @@ const updateBook = (bookData, bookId) => __awaiter(void 0, void 0, void 0, funct
         where: { id: bookId },
         returning: true,
     });
+    if (result[0] === 0) {
+        throw new customError_1.default(errorTypes_1.default.NotFoundError, "Book not found");
+    }
     return result[1][0];
 });
 exports.default = {

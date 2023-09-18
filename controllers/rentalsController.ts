@@ -26,11 +26,19 @@ const getSingleRent = async (
   try {
     const rent = await rentalsService.getSingleRent(
       +req.params.bookId,
-      req.user!.id
+      +req.params.userId
     );
     res.status(200).json(rent);
   } catch (error) {
-    console.log("-----------------", error);
+    next(error);
+  }
+};
+
+const updateRent = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await rentalsService.updateRent(req.body, req.user!.id);
+    res.status(200).json(data);
+  } catch (error) {
     next(error);
   }
 };
@@ -38,4 +46,5 @@ const getSingleRent = async (
 export default {
   createRent,
   getSingleRent,
+  updateRent,
 };

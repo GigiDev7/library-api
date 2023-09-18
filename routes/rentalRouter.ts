@@ -12,6 +12,9 @@ router
   .route("/")
   .post(rentalValidator, validationHandler, rentalsController.createRent);
 
-router.route("/:bookId").get(rentalsController.getSingleRent);
+router
+  .route("/:bookId/:userId")
+  .get(rentalsController.getSingleRent)
+  .put(rentalValidator, validationHandler, rentalsController.updateRent);
 
 export default router;

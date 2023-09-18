@@ -9,6 +9,8 @@ export default function (
 ) {
   if (err?.name === Errors.InvalidCredentialsError) {
     return res.status(401).json({ message: err.message });
+  } else if (err?.name === Errors.NotFoundError) {
+    return res.status(404).json({ message: err.message });
   }
   return res.status(500).json({ message: "Something went wrong" });
 }

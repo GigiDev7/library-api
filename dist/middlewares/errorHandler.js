@@ -8,6 +8,9 @@ function default_1(err, req, res, next) {
     if ((err === null || err === void 0 ? void 0 : err.name) === errorTypes_1.default.InvalidCredentialsError) {
         return res.status(401).json({ message: err.message });
     }
+    else if ((err === null || err === void 0 ? void 0 : err.name) === errorTypes_1.default.NotFoundError) {
+        return res.status(404).json({ message: err.message });
+    }
     return res.status(500).json({ message: "Something went wrong" });
 }
 exports.default = default_1;

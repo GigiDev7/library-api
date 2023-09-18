@@ -1,4 +1,6 @@
 import Book from "../models/book";
+import CustomError from "../utils/customError";
+import Errors from "../utils/errorTypes";
 
 type BookData = {
   name: string;
@@ -24,6 +26,9 @@ const updateBook = async (bookData: BookData, bookId: string) => {
     where: { id: bookId },
     returning: true,
   });
+  if (result[0] === 0) {
+    throw new CustomError(Errors.NotFoundError, "Book not found");
+  }
   return result[1][0];
 };
 

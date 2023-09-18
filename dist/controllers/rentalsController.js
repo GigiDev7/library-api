@@ -32,15 +32,24 @@ const createRent = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 const getSingleRent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const rent = yield rentalsService_1.default.getSingleRent(+req.params.bookId, req.user.id);
+        const rent = yield rentalsService_1.default.getSingleRent(+req.params.bookId, +req.params.userId);
         res.status(200).json(rent);
     }
     catch (error) {
-        console.log("-----------------", error);
+        next(error);
+    }
+});
+const updateRent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const data = yield rentalsService_1.default.updateRent(req.body, req.user.id);
+        res.status(200).json(data);
+    }
+    catch (error) {
         next(error);
     }
 });
 exports.default = {
     createRent,
     getSingleRent,
+    updateRent,
 };

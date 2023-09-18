@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const book_1 = __importDefault(require("../models/book"));
 const rentals_1 = __importDefault(require("../models/rentals"));
 const user_1 = __importDefault(require("../models/user"));
+const customError_1 = __importDefault(require("../utils/customError"));
+const errorTypes_1 = __importDefault(require("../utils/errorTypes"));
 const createRent = (rentalData) => __awaiter(void 0, void 0, void 0, function* () {
     return rentals_1.default.create(rentalData);
 });
@@ -27,7 +29,18 @@ const getSingleRent = (BookId, UserId) => {
         ],
     });
 };
+const updateRent = (rentalData, UserId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield rentals_1.default.update(rentalData, {
+        where: { BookId: rentalData.BookId, UserId },
+        returning: true,
+    });
+    if (result[0] === 0) {
+        throw new customError_1.default(errorTypes_1.default.NotFoundError, "Rent not found");
+    }
+    return result[1][0];
+});
 exports.default = {
     createRent,
     getSingleRent,
+    updateRent,
 };
