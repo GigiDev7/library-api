@@ -12,11 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const book_1 = __importDefault(require("../models/book"));
 const rentals_1 = __importDefault(require("../models/rentals"));
+const user_1 = __importDefault(require("../models/user"));
 const createRent = (rentalData) => __awaiter(void 0, void 0, void 0, function* () {
     return rentals_1.default.create(rentalData);
 });
-const getSingleRent = () => { };
+const getSingleRent = (BookId, UserId) => {
+    return rentals_1.default.findOne({
+        where: { BookId, UserId },
+        include: [
+            { model: book_1.default, attributes: ["name", "genre", "author"] },
+            { model: user_1.default, attributes: ["firstname", "lastname", "email", "role"] },
+        ],
+    });
+};
 exports.default = {
     createRent,
+    getSingleRent,
 };

@@ -18,6 +18,24 @@ const createRent = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getSingleRent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const rent = await rentalsService.getSingleRent(
+      +req.params.bookId,
+      req.user!.id
+    );
+    res.status(200).json(rent);
+  } catch (error) {
+    console.log("-----------------", error);
+    next(error);
+  }
+};
+
 export default {
   createRent,
+  getSingleRent,
 };

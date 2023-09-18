@@ -6,6 +6,7 @@ import {
   InferCreationAttributes,
 } from "sequelize";
 import { sequelize } from "../db";
+import User from "./user";
 
 interface BookModel
   extends Model<

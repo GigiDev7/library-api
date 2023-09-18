@@ -12,4 +12,6 @@ router
   .route("/")
   .post(rentalValidator, validationHandler, rentalsController.createRent);
 
+router.route("/:bookId").get(rentalsController.getSingleRent);
+
 export default router;
