@@ -13,8 +13,9 @@ router
   .post(rentalValidator, validationHandler, rentalsController.createRent);
 
 router
-  .route("/:bookId/:userId")
+  .route("/:bookId")
   .get(rentalsController.getSingleRent)
-  .put(rentalValidator, validationHandler, rentalsController.updateRent);
+  .put(rentalValidator, validationHandler, rentalsController.updateRent)
+  .delete(rentalsController.deleteRent);
 
 export default router;

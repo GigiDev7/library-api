@@ -39,8 +39,13 @@ const updateRent = async (
   return result[1][0];
 };
 
+const deleteRent = (BookId: number, UserId: number) => {
+  return Rental.destroy({ where: { BookId, UserId } });
+};
+
 export default {
   createRent,
   getSingleRent,
   updateRent,
+  deleteRent,
 };

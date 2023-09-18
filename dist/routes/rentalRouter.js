@@ -14,7 +14,8 @@ router
     .route("/")
     .post(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.createRent);
 router
-    .route("/:bookId/:userId")
+    .route("/:bookId")
     .get(rentalsController_1.default.getSingleRent)
-    .put(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.updateRent);
+    .put(rentalValidators_1.rentalValidator, validationHandler_1.default, rentalsController_1.default.updateRent)
+    .delete(rentalsController_1.default.deleteRent);
 exports.default = router;

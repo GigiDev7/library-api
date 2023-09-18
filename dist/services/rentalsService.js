@@ -39,8 +39,12 @@ const updateRent = (rentalData, UserId) => __awaiter(void 0, void 0, void 0, fun
     }
     return result[1][0];
 });
+const deleteRent = (BookId, UserId) => {
+    return rentals_1.default.destroy({ where: { BookId, UserId } });
+};
 exports.default = {
     createRent,
     getSingleRent,
     updateRent,
+    deleteRent,
 };
