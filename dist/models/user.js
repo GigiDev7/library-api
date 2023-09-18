@@ -40,5 +40,6 @@ const User = db_1.sequelize.define("User", {
     },
 }, {
     timestamps: true,
+    paranoid: true,
 });
 exports.default = User;

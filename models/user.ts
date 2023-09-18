@@ -61,6 +61,7 @@ const User = sequelize.define<UserModel>(
   },
   {
     timestamps: true,
+    paranoid: true,
   }
 );
 
