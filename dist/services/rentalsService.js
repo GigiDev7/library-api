@@ -21,15 +21,19 @@ const errorTypes_1 = __importDefault(require("../utils/errorTypes"));
 const createRent = (rentalData) => __awaiter(void 0, void 0, void 0, function* () {
     return rentals_1.default.create(rentalData);
 });
-const getSingleRent = (BookId, UserId) => {
-    return rentals_1.default.findOne({
+const getSingleRent = (BookId, UserId) => __awaiter(void 0, void 0, void 0, function* () {
+    const rent = yield rentals_1.default.findOne({
         where: { BookId, UserId },
         include: [
             { model: book_1.default, attributes: ["name", "genre", "author"] },
             { model: user_1.default, attributes: ["firstname", "lastname", "email", "role"] },
         ],
     });
-};
+    if (!rent) {
+        throw new customError_1.default(errorTypes_1.default.NotFoundError, "Rent does not exist");
+    }
+    return rent;
+});
 const updateRent = (rentalData, UserId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield rentals_1.default.update(rentalData, {
         where: { BookId: rentalData.BookId, UserId },
@@ -43,7 +47,7 @@ const updateRent = (rentalData, UserId) => __awaiter(void 0, void 0, void 0, fun
 const deleteRent = (BookId, UserId) => {
     return rentals_1.default.destroy({ where: { BookId, UserId } });
 };
-const getRents = (query) => __awaiter(void 0, void 0, void 0, function* () {
+const getRents = (query, userId) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = {};
     const bookFilters = {};
     const page = query.page || 1;
@@ -106,6 +110,7 @@ const getRents = (query) => __awaiter(void 0, void 0, void 0, function* () {
             {
                 model: user_1.default,
                 attributes: ["firstname", "lastname", "email", "role"],
+                where: { id: userId },
             },
         ],
     });

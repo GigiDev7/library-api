@@ -16,7 +16,6 @@ const booksServices_1 = __importDefault(require("../services/booksServices"));
 const createBook = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const book = yield booksServices_1.default.createBook(req.body);
-        console.log(book);
         res.status(201).json(book);
     }
     catch (error) {

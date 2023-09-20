@@ -6,6 +6,10 @@ export const createBookValidator = checkSchema({
     isString: {
       errorMessage: "Please enter valid name of a book",
     },
+    isLength: {
+      options: { max: 50 },
+      errorMessage: "Name should not exceed 50 characters",
+    },
     trim: true,
   },
   genre: {
@@ -13,12 +17,20 @@ export const createBookValidator = checkSchema({
     isString: {
       errorMessage: "Please enter valid genre a book",
     },
+    isLength: {
+      options: { max: 20 },
+      errorMessage: "Genre should not exceed 20 characters",
+    },
     trim: true,
   },
   author: {
     in: ["body"],
     isString: {
       errorMessage: "Please enter valid author a book",
+    },
+    isLength: {
+      options: { max: 50 },
+      errorMessage: "Author should not exceed 50 characters",
     },
     trim: true,
   },

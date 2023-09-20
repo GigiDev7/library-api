@@ -22,19 +22,19 @@ interface UserModel
   lastname: string;
   email: string;
   password: string;
-  role: CreationOptional<UserRole>;
+  role: string;
 }
 
 const User = sequelize.define<UserModel>(
   "User",
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       primaryKey: true,
       autoIncrement: true,
     },
     firstname: {
-      type: DataTypes.STRING(40),
+      type: DataTypes.STRING(60),
       allowNull: false,
     },
     lastname: {
@@ -42,7 +42,7 @@ const User = sequelize.define<UserModel>(
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
       allowNull: false,
       unique: true,
       validate: {
@@ -50,7 +50,7 @@ const User = sequelize.define<UserModel>(
       },
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(200),
       allowNull: false,
     },
     role: {

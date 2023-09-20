@@ -12,8 +12,8 @@ exports.signinValidator = (0, express_validator_1.checkSchema)({
     password: {
         in: ["body"],
         isLength: {
-            options: { min: 8 },
-            errorMessage: "Password must be at least 8 characters",
+            options: { min: 8, max: 50 },
+            errorMessage: "Password must be at least 8 and max 50 characters long",
         },
     },
 });
@@ -22,6 +22,10 @@ exports.signupValidator = (0, express_validator_1.checkSchema)({
         in: ["body"],
         isEmail: {
             errorMessage: "Please provide a valid email address",
+        },
+        isLength: {
+            options: { max: 200 },
+            errorMessage: "Email should not exceed 50 characters",
         },
     },
     password: {
@@ -34,11 +38,19 @@ exports.signupValidator = (0, express_validator_1.checkSchema)({
     firstname: {
         in: ["body"],
         errorMessage: "Please enter your first name",
+        isLength: {
+            options: { max: 50 },
+            errorMessage: "Firstname should not exceed 50 characters",
+        },
         trim: true,
     },
     lastname: {
         in: ["body"],
         errorMessage: "Please enter your last name",
+        isLength: {
+            options: { max: 50 },
+            errorMessage: "Lastname should not exceed 50 characters",
+        },
         trim: true,
     },
 });

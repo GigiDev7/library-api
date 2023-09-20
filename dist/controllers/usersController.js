@@ -36,7 +36,7 @@ const signup = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 const deleteUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield usersServices_1.default.deleteUser(req.params.userId);
+        yield usersServices_1.default.deleteUser(+req.params.userId);
         res.status(204).json();
     }
     catch (error) {

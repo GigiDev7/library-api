@@ -9,12 +9,12 @@ var UserRole;
 })(UserRole || (UserRole = {}));
 const User = db_1.sequelize.define("User", {
     id: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.BIGINT,
         primaryKey: true,
         autoIncrement: true,
     },
     firstname: {
-        type: sequelize_1.DataTypes.STRING(40),
+        type: sequelize_1.DataTypes.STRING(60),
         allowNull: false,
     },
     lastname: {
@@ -22,7 +22,7 @@ const User = db_1.sequelize.define("User", {
         allowNull: false,
     },
     email: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING(200),
         allowNull: false,
         unique: true,
         validate: {
@@ -30,7 +30,7 @@ const User = db_1.sequelize.define("User", {
         },
     },
     password: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING(200),
         allowNull: false,
     },
     role: {

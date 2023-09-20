@@ -14,8 +14,14 @@ const createBook = (bookData: BookData) => {
   return Book.create(bookData);
 };
 
-const getSingleBook = (bookId: string) => {
-  return Book.findByPk(bookId, { raw: true });
+const getSingleBook = async (bookId: string) => {
+  const book = await Book.findByPk(bookId, { raw: true });
+
+  if (!book) {
+    throw new CustomError(Errors.NotFoundError, "Book does not exist");
+  }
+
+  return book;
 };
 
 const deleteBook = (bookId: string) => {

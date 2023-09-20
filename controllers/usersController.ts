@@ -24,7 +24,7 @@ const signup = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await usersServices.deleteUser(req.params.userId);
+    await usersServices.deleteUser(+req.params.userId);
     res.status(204).json();
   } catch (error) {
     next(error);

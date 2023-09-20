@@ -9,6 +9,7 @@ type UserData = {
   lastname: string;
   email: string;
   password: string;
+  role?: string;
 };
 
 const siginin = async (email: string, password: string) => {
@@ -46,15 +47,18 @@ const signup = async (userData: UserData) => {
   const salt = await bcrypt.genSalt(12);
   const hashedPassword = await bcrypt.hash(userData.password, salt);
 
+  const role = userData.role || "user";
+
   await User.create({
     email: userData.email,
     firstname: userData.firstname,
     lastname: userData.lastname,
     password: hashedPassword,
+    role: role,
   });
 };
 
-const deleteUser = (userId: string) => {
+const deleteUser = (userId: number) => {
   return User.destroy({ where: { id: userId } });
 };
 

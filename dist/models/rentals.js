@@ -22,14 +22,14 @@ const Rental = db_1.sequelize.define("Rental", {
         allowNull: false,
     },
     BookId: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.BIGINT,
         references: {
             model: book_1.default,
             key: "id",
         },
     },
     UserId: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.BIGINT,
         references: {
             model: user_1.default,
             key: "id",

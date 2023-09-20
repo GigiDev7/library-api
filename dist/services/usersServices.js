@@ -38,11 +38,13 @@ const siginin = (email, password) => __awaiter(void 0, void 0, void 0, function*
 const signup = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const salt = yield bcrypt_1.default.genSalt(12);
     const hashedPassword = yield bcrypt_1.default.hash(userData.password, salt);
+    const role = userData.role || "user";
     yield user_1.default.create({
         email: userData.email,
         firstname: userData.firstname,
         lastname: userData.lastname,
         password: hashedPassword,
+        role: role,
     });
 });
 const deleteUser = (userId) => {

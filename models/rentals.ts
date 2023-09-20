@@ -36,14 +36,14 @@ const Rental = sequelize.define<RentalModel>("Rental", {
     allowNull: false,
   },
   BookId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     references: {
       model: Book,
       key: "id",
     },
   },
   UserId: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.BIGINT,
     references: {
       model: User,
       key: "id",

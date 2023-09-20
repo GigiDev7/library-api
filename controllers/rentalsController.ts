@@ -54,7 +54,7 @@ const deleteRent = async (req: Request, res: Response, next: NextFunction) => {
 
 const getRents = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const results = await rentalsService.getRents(req.query);
+    const results = await rentalsService.getRents(req.query, req.user!.id);
     res.status(200).json(results);
   } catch (error) {
     next(error);

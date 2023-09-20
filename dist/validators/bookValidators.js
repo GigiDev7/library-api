@@ -8,6 +8,10 @@ exports.createBookValidator = (0, express_validator_1.checkSchema)({
         isString: {
             errorMessage: "Please enter valid name of a book",
         },
+        isLength: {
+            options: { max: 50 },
+            errorMessage: "Name should not exceed 50 characters",
+        },
         trim: true,
     },
     genre: {
@@ -15,12 +19,20 @@ exports.createBookValidator = (0, express_validator_1.checkSchema)({
         isString: {
             errorMessage: "Please enter valid genre a book",
         },
+        isLength: {
+            options: { max: 20 },
+            errorMessage: "Genre should not exceed 20 characters",
+        },
         trim: true,
     },
     author: {
         in: ["body"],
         isString: {
             errorMessage: "Please enter valid author a book",
+        },
+        isLength: {
+            options: { max: 50 },
+            errorMessage: "Author should not exceed 50 characters",
         },
         trim: true,
     },

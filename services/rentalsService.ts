@@ -16,14 +16,20 @@ const createRent = async (rentalData: RentalData) => {
   return Rental.create(rentalData);
 };
 
-const getSingleRent = (BookId: number, UserId: number) => {
-  return Rental.findOne({
+const getSingleRent = async (BookId: number, UserId: number) => {
+  const rent = await Rental.findOne({
     where: { BookId, UserId },
     include: [
       { model: Book, attributes: ["name", "genre", "author"] },
       { model: User, attributes: ["firstname", "lastname", "email", "role"] },
     ],
   });
+
+  if (!rent) {
+    throw new CustomError(Errors.NotFoundError, "Rent does not exist");
+  }
+
+  return rent;
 };
 
 const updateRent = async (
@@ -44,7 +50,7 @@ const deleteRent = (BookId: number, UserId: number) => {
   return Rental.destroy({ where: { BookId, UserId } });
 };
 
-const getRents = async (query: any) => {
+const getRents = async (query: any, userId: number) => {
   const filters: any = {};
   const bookFilters: any = {};
 
@@ -114,6 +120,7 @@ const getRents = async (query: any) => {
       {
         model: User,
         attributes: ["firstname", "lastname", "email", "role"],
+        where: { id: userId },
       },
     ],
   });

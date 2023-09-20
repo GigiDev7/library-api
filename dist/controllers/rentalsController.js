@@ -59,7 +59,7 @@ const deleteRent = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
 });
 const getRents = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const results = yield rentalsService_1.default.getRents(req.query);
+        const results = yield rentalsService_1.default.getRents(req.query, req.user.id);
         res.status(200).json(results);
     }
     catch (error) {
